@@ -1,0 +1,2 @@
+-- Initial schema placeholder for QA Hotel.
+-- Run `prisma migrate dev` to generate vendor-specific SQL from schema.prisma.

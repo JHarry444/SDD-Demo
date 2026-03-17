@@ -1,0 +1,158 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  pending_verification
+  active
+  suspended
+  deleted
+}
+
+enum PrincipalType {
+  user
+  admin
+}
+
+enum AdminRole {
+  admin_full_access
+}
+
+enum AdminStatus {
+  active
+  suspended
+}
+
+enum RoomStatus {
+  active
+  inactive
+  maintenance
+}
+
+enum ReservationStatus {
+  pending_payment
+  confirmed
+  cancelled
+  failed
+  expired
+}
+
+enum PaymentStatus {
+  initiated
+  authorized
+  captured
+  failed
+  refunded
+}
+
+model UserAccount {
+  id              String        @id @default(uuid())
+  email           String        @unique
+  passwordHash    String
+  emailVerifiedAt DateTime?
+  status          UserStatus    @default(pending_verification)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  sessions        Session[]
+  reservations    Reservation[]
+}
+
+model AdminAccount {
+  id           String       @id @default(uuid())
+  email        String       @unique
+  passwordHash String
+  role         AdminRole    @default(admin_full_access)
+  status       AdminStatus  @default(active)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  auditEvents  AuditEvent[]
+}
+
+model Session {
+  id            String         @id @default(uuid())
+  principalType PrincipalType
+  principalId   String
+  issuedAt      DateTime       @default(now())
+  expiresAt     DateTime
+  revokedAt     DateTime?
+  ipAddress     String?
+  userId        String?
+  user          UserAccount?   @relation(fields: [userId], references: [id])
+}
+
+model Room {
+  id           String        @id @default(uuid())
+  code         String        @unique
+  roomType     String
+  nightlyRate  Decimal       @db.Decimal(10, 2)
+  currency     String
+  maxGuests    Int
+  status       RoomStatus    @default(active)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  reservations Reservation[]
+  roomAmenities RoomAmenity[]
+}
+
+model Amenity {
+  id            String       @id @default(uuid())
+  name          String       @unique
+  category      String?
+  roomAmenities RoomAmenity[]
+}
+
+model RoomAmenity {
+  roomId    String
+  amenityId String
+  room      Room    @relation(fields: [roomId], references: [id])
+  amenity   Amenity @relation(fields: [amenityId], references: [id])
+
+  @@id([roomId, amenityId])
+}
+
+model Reservation {
+  id           String            @id @default(uuid())
+  userId       String
+  roomId       String
+  checkInDate  DateTime
+  checkOutDate DateTime
+  guestCount   Int
+  status       ReservationStatus @default(pending_payment)
+  holdExpiresAt DateTime?
+  totalAmount  Decimal           @db.Decimal(10, 2)
+  currency     String
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  user         UserAccount       @relation(fields: [userId], references: [id])
+  room         Room              @relation(fields: [roomId], references: [id])
+  payments     PaymentRecord[]
+}
+
+model PaymentRecord {
+  id                String       @id @default(uuid())
+  reservationId     String
+  providerReference String?
+  attemptNumber     Int
+  amount            Decimal      @db.Decimal(10, 2)
+  currency          String
+  status            PaymentStatus
+  failureReason     String?
+  attemptedAt       DateTime     @default(now())
+  reservation       Reservation  @relation(fields: [reservationId], references: [id])
+}
+
+model AuditEvent {
+  id          String       @id @default(uuid())
+  adminId     String
+  actionType  String
+  targetType  String
+  targetId    String?
+  metadataJson Json?
+  createdAt   DateTime     @default(now())
+  admin       AdminAccount @relation(fields: [adminId], references: [id])
+}

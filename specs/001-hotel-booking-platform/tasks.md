@@ -17,14 +17,14 @@
 
 **Purpose**: Initialize monorepo tooling and baseline web app scaffolding.
 
-- [ ] T001 Initialize workspace scripts and workspaces in package.json
-- [ ] T002 Create backend TypeScript project config in backend/tsconfig.json
-- [ ] T003 Create frontend Vite React TypeScript config in frontend/vite.config.ts
-- [ ] T004 [P] Configure backend lint/format rules in backend/eslint.config.js
-- [ ] T005 [P] Configure frontend lint/format rules in frontend/eslint.config.js
-- [ ] T006 [P] Add backend env template in backend/.env.example
-- [ ] T007 [P] Add frontend env template in frontend/.env.example
-- [ ] T008 Add initial CI test workflow in .github/workflows/ci.yml
+- [x] T001 Initialize workspace scripts and workspaces in package.json
+- [x] T002 Create backend TypeScript project config in backend/tsconfig.json
+- [x] T003 Create frontend Vite React TypeScript config in frontend/vite.config.ts
+- [x] T004 [P] Configure backend lint/format rules in backend/eslint.config.js
+- [x] T005 [P] Configure frontend lint/format rules in frontend/eslint.config.js
+- [x] T006 [P] Add backend env template in backend/.env.example
+- [x] T007 [P] Add frontend env template in frontend/.env.example
+- [x] T008 Add initial CI test workflow in .github/workflows/ci.yml
 
 ---
 
@@ -34,16 +34,16 @@
 
 **CRITICAL**: Complete this phase before user story work begins.
 
-- [ ] T009 Create Prisma schema for core entities in backend/prisma/schema.prisma
-- [ ] T010 Generate initial migration for core schema in backend/prisma/migrations/001_init/migration.sql
-- [ ] T011 Implement database client and config in backend/src/config/db.ts
-- [ ] T012 [P] Implement Express app bootstrap and middleware wiring in backend/src/app.ts
-- [ ] T013 [P] Implement security middleware (helmet, rate-limit, validation errors) in backend/src/middleware/security.ts
-- [ ] T014 [P] Implement session middleware and cookie settings in backend/src/middleware/session.ts
-- [ ] T015 Implement shared API error model and handler in backend/src/middleware/error-handler.ts
-- [ ] T016 [P] Implement frontend API client and auth-aware fetch wrapper in frontend/src/services/apiClient.ts
-- [ ] T017 [P] Configure Playwright project and base e2e setup in e2e/playwright/playwright.config.ts
-- [ ] T018 Implement contract test harness bootstrap for OpenAPI in backend/tests/contract/openapi.contract.test.ts
+- [x] T009 Create Prisma schema for core entities in backend/prisma/schema.prisma
+- [x] T010 Generate initial migration for core schema in backend/prisma/migrations/001_init/migration.sql
+- [x] T011 Implement database client and config in backend/src/config/db.ts
+- [x] T012 [P] Implement Express app bootstrap and middleware wiring in backend/src/app.ts
+- [x] T013 [P] Implement security middleware (helmet, rate-limit, validation errors) in backend/src/middleware/security.ts
+- [x] T014 [P] Implement session middleware and cookie settings in backend/src/middleware/session.ts
+- [x] T015 Implement shared API error model and handler in backend/src/middleware/error-handler.ts
+- [x] T016 [P] Implement frontend API client and auth-aware fetch wrapper in frontend/src/services/apiClient.ts
+- [x] T017 [P] Configure Playwright project and base e2e setup in e2e/playwright/playwright.config.ts
+- [x] T018 Implement contract test harness bootstrap for OpenAPI in backend/tests/contract/openapi.contract.test.ts
 
 **Checkpoint**: Foundational platform is ready for parallel story implementation.
 
@@ -57,20 +57,20 @@
 
 ### Tests for User Story 1 (REQUIRED)
 
-- [ ] T019 [P] [US1] Add auth contract tests for signup/login/verify/recovery endpoints in backend/tests/contract/auth.contract.test.ts
-- [ ] T020 [P] [US1] Add backend auth service unit tests in backend/tests/unit/auth.service.test.ts
-- [ ] T021 [P] [US1] Add backend auth integration tests in backend/tests/integration/auth.routes.test.ts
-- [ ] T022 [P] [US1] Add frontend auth component tests in frontend/tests/component/auth/auth-forms.test.tsx
-- [ ] T023 [P] [US1] Add e2e auth journey test in e2e/playwright/auth-flow.spec.ts
+- [x] T019 [P] [US1] Add auth contract tests for signup/login/verify/recovery endpoints in backend/tests/contract/auth.contract.test.ts
+- [x] T020 [P] [US1] Add backend auth service unit tests in backend/tests/unit/auth.service.test.ts
+- [x] T021 [P] [US1] Add backend auth integration tests in backend/tests/integration/auth.routes.test.ts
+- [x] T022 [P] [US1] Add frontend auth component tests in frontend/tests/component/auth/auth-forms.test.tsx
+- [x] T023 [P] [US1] Add e2e auth journey test in e2e/playwright/auth-flow.spec.ts
 
 ### Implementation for User Story 1
 
-- [ ] T024 [P] [US1] Implement UserAccount and Session repositories in backend/src/modules/auth/auth.repository.ts
-- [ ] T025 [US1] Implement password hashing and credential validation service in backend/src/modules/auth/auth.service.ts
-- [ ] T026 [US1] Implement auth routes (signup, verify-email, login, password-recovery) in backend/src/modules/auth/auth.routes.ts
-- [ ] T027 [US1] Register auth module routes in backend/src/app.ts
-- [ ] T028 [P] [US1] Implement auth screens (signup/login/recovery) in frontend/src/features/auth/pages/AuthPages.tsx
-- [ ] T029 [US1] Implement frontend auth state/session handling in frontend/src/features/auth/state/authStore.ts
+- [x] T024 [P] [US1] Implement UserAccount and Session repositories in backend/src/modules/auth/auth.repository.ts
+- [x] T025 [US1] Implement password hashing and credential validation service in backend/src/modules/auth/auth.service.ts
+- [x] T026 [US1] Implement auth routes (signup, verify-email, login, password-recovery) in backend/src/modules/auth/auth.routes.ts
+- [x] T027 [US1] Register auth module routes in backend/src/app.ts
+- [x] T028 [P] [US1] Implement auth screens (signup/login/recovery) in frontend/src/features/auth/pages/AuthPages.tsx
+- [x] T029 [US1] Implement frontend auth state/session handling in frontend/src/features/auth/state/authStore.ts
 
 **Checkpoint**: User Story 1 is independently functional and testable.
 
@@ -84,20 +84,20 @@
 
 ### Tests for User Story 2 (REQUIRED)
 
-- [ ] T030 [P] [US2] Add room discovery contract tests in backend/tests/contract/rooms.contract.test.ts
-- [ ] T031 [P] [US2] Add room availability service unit tests in backend/tests/unit/rooms.service.test.ts
-- [ ] T032 [P] [US2] Add room search integration tests in backend/tests/integration/rooms.routes.test.ts
-- [ ] T033 [P] [US2] Add room search/filter UI tests in frontend/tests/component/rooms/room-search.test.tsx
-- [ ] T034 [P] [US2] Add e2e room discovery journey test in e2e/playwright/room-discovery.spec.ts
+- [x] T030 [P] [US2] Add room discovery contract tests in backend/tests/contract/rooms.contract.test.ts
+- [x] T031 [P] [US2] Add room availability service unit tests in backend/tests/unit/rooms.service.test.ts
+- [x] T032 [P] [US2] Add room search integration tests in backend/tests/integration/rooms.routes.test.ts
+- [x] T033 [P] [US2] Add room search/filter UI tests in frontend/tests/component/rooms/room-search.test.tsx
+- [x] T034 [P] [US2] Add e2e room discovery journey test in e2e/playwright/room-discovery.spec.ts
 
 ### Implementation for User Story 2
 
-- [ ] T035 [P] [US2] Implement Room and Amenity repositories in backend/src/modules/rooms/rooms.repository.ts
-- [ ] T036 [US2] Implement availability and filter logic in backend/src/modules/rooms/rooms.service.ts
-- [ ] T037 [US2] Implement GET /rooms endpoint in backend/src/modules/rooms/rooms.routes.ts
-- [ ] T038 [US2] Register rooms module routes in backend/src/app.ts
-- [ ] T039 [P] [US2] Implement room listing and filter UI in frontend/src/features/rooms/pages/RoomSearchPage.tsx
-- [ ] T040 [US2] Implement room query state and URL filter sync in frontend/src/features/rooms/state/roomSearchStore.ts
+- [x] T035 [P] [US2] Implement Room and Amenity repositories in backend/src/modules/rooms/rooms.repository.ts
+- [x] T036 [US2] Implement availability and filter logic in backend/src/modules/rooms/rooms.service.ts
+- [x] T037 [US2] Implement GET /rooms endpoint in backend/src/modules/rooms/rooms.routes.ts
+- [x] T038 [US2] Register rooms module routes in backend/src/app.ts
+- [x] T039 [P] [US2] Implement room listing and filter UI in frontend/src/features/rooms/pages/RoomSearchPage.tsx
+- [x] T040 [US2] Implement room query state and URL filter sync in frontend/src/features/rooms/state/roomSearchStore.ts
 
 **Checkpoint**: User Stories 1 and 2 work independently.
 
@@ -111,21 +111,21 @@
 
 ### Tests for User Story 3 (REQUIRED)
 
-- [ ] T041 [P] [US3] Add reservation/payment contract tests in backend/tests/contract/reservations.contract.test.ts
-- [ ] T042 [P] [US3] Add reservation lifecycle unit tests in backend/tests/unit/reservations.service.test.ts
-- [ ] T043 [P] [US3] Add payment retry worker unit tests in backend/tests/unit/payments.worker.test.ts
-- [ ] T044 [P] [US3] Add reservation and payment integration tests in backend/tests/integration/reservations.routes.test.ts
-- [ ] T045 [P] [US3] Add frontend checkout component tests in frontend/tests/component/reservations/checkout.test.tsx
-- [ ] T046 [P] [US3] Add e2e booking and payment path test in e2e/playwright/booking-flow.spec.ts
+- [x] T041 [P] [US3] Add reservation/payment contract tests in backend/tests/contract/reservations.contract.test.ts
+- [x] T042 [P] [US3] Add reservation lifecycle unit tests in backend/tests/unit/reservations.service.test.ts
+- [x] T043 [P] [US3] Add payment retry worker unit tests in backend/tests/unit/payments.worker.test.ts
+- [x] T044 [P] [US3] Add reservation and payment integration tests in backend/tests/integration/reservations.routes.test.ts
+- [x] T045 [P] [US3] Add frontend checkout component tests in frontend/tests/component/reservations/checkout.test.tsx
+- [x] T046 [P] [US3] Add e2e booking and payment path test in e2e/playwright/booking-flow.spec.ts
 
 ### Implementation for User Story 3
 
-- [ ] T047 [P] [US3] Implement Reservation and PaymentRecord repositories in backend/src/modules/reservations/reservations.repository.ts
-- [ ] T048 [US3] Implement pending-reservation creation and hold logic in backend/src/modules/reservations/reservations.service.ts
-- [ ] T049 [US3] Implement payment processing and async retry worker in backend/src/modules/payments/payments.worker.ts
-- [ ] T050 [US3] Implement reservations routes (create/list/detail/confirm-state) in backend/src/modules/reservations/reservations.routes.ts
-- [ ] T051 [P] [US3] Implement checkout and confirmation UI in frontend/src/features/reservations/pages/CheckoutPage.tsx
-- [ ] T052 [US3] Implement reservation status polling and payment-state UX in frontend/src/features/reservations/state/reservationFlowStore.ts
+- [x] T047 [P] [US3] Implement Reservation and PaymentRecord repositories in backend/src/modules/reservations/reservations.repository.ts
+- [x] T048 [US3] Implement pending-reservation creation and hold logic in backend/src/modules/reservations/reservations.service.ts
+- [x] T049 [US3] Implement payment processing and async retry worker in backend/src/modules/payments/payments.worker.ts
+- [x] T050 [US3] Implement reservations routes (create/list/detail/confirm-state) in backend/src/modules/reservations/reservations.routes.ts
+- [x] T051 [P] [US3] Implement checkout and confirmation UI in frontend/src/features/reservations/pages/CheckoutPage.tsx
+- [x] T052 [US3] Implement reservation status polling and payment-state UX in frontend/src/features/reservations/state/reservationFlowStore.ts
 
 **Checkpoint**: MVP (US1+US2+US3) is end-to-end functional.
 
@@ -139,18 +139,18 @@
 
 ### Tests for User Story 4 (REQUIRED)
 
-- [ ] T053 [P] [US4] Add modify/cancel contract tests in backend/tests/contract/reservation-management.contract.test.ts
-- [ ] T054 [P] [US4] Add reservation policy unit tests in backend/tests/unit/reservation-policy.service.test.ts
-- [ ] T055 [P] [US4] Add reservation management integration tests in backend/tests/integration/reservation-management.routes.test.ts
-- [ ] T056 [P] [US4] Add reservation management UI tests in frontend/tests/component/reservations/reservation-management.test.tsx
-- [ ] T057 [P] [US4] Add e2e reservation manage flow test in e2e/playwright/reservation-management.spec.ts
+- [x] T053 [P] [US4] Add modify/cancel contract tests in backend/tests/contract/reservation-management.contract.test.ts
+- [x] T054 [P] [US4] Add reservation policy unit tests in backend/tests/unit/reservation-policy.service.test.ts
+- [x] T055 [P] [US4] Add reservation management integration tests in backend/tests/integration/reservation-management.routes.test.ts
+- [x] T056 [P] [US4] Add reservation management UI tests in frontend/tests/component/reservations/reservation-management.test.tsx
+- [x] T057 [P] [US4] Add e2e reservation manage flow test in e2e/playwright/reservation-management.spec.ts
 
 ### Implementation for User Story 4
 
-- [ ] T058 [US4] Implement reservation modification policy logic in backend/src/modules/reservations/reservation-policy.service.ts
-- [ ] T059 [US4] Implement modify and cancel endpoints in backend/src/modules/reservations/reservation-management.routes.ts
-- [ ] T060 [P] [US4] Implement reservation history/details UI in frontend/src/features/reservations/pages/ReservationHistoryPage.tsx
-- [ ] T061 [US4] Implement modify/cancel actions and optimistic updates in frontend/src/features/reservations/state/reservationManagementStore.ts
+- [x] T058 [US4] Implement reservation modification policy logic in backend/src/modules/reservations/reservation-policy.service.ts
+- [x] T059 [US4] Implement modify and cancel endpoints in backend/src/modules/reservations/reservation-management.routes.ts
+- [x] T060 [P] [US4] Implement reservation history/details UI in frontend/src/features/reservations/pages/ReservationHistoryPage.tsx
+- [x] T061 [US4] Implement modify/cancel actions and optimistic updates in frontend/src/features/reservations/state/reservationManagementStore.ts
 
 **Checkpoint**: User reservation lifecycle is fully self-service.
 
@@ -164,19 +164,19 @@
 
 ### Tests for User Story 5 (REQUIRED)
 
-- [ ] T062 [P] [US5] Add admin contract tests for inventory/report endpoints in backend/tests/contract/admin.contract.test.ts
-- [ ] T063 [P] [US5] Add admin authorization and audit unit tests in backend/tests/unit/admin.service.test.ts
-- [ ] T064 [P] [US5] Add admin integration tests in backend/tests/integration/admin.routes.test.ts
-- [ ] T065 [P] [US5] Add admin UI component tests in frontend/tests/component/admin/admin-console.test.tsx
-- [ ] T066 [P] [US5] Add e2e admin operations test in e2e/playwright/admin-operations.spec.ts
+- [x] T062 [P] [US5] Add admin contract tests for inventory/report endpoints in backend/tests/contract/admin.contract.test.ts
+- [x] T063 [P] [US5] Add admin authorization and audit unit tests in backend/tests/unit/admin.service.test.ts
+- [x] T064 [P] [US5] Add admin integration tests in backend/tests/integration/admin.routes.test.ts
+- [x] T065 [P] [US5] Add admin UI component tests in frontend/tests/component/admin/admin-console.test.tsx
+- [x] T066 [P] [US5] Add e2e admin operations test in e2e/playwright/admin-operations.spec.ts
 
 ### Implementation for User Story 5
 
-- [ ] T067 [US5] Implement admin auth guard and full-access role enforcement in backend/src/modules/admin/admin-authz.middleware.ts
-- [ ] T068 [US5] Implement admin inventory and reporting services in backend/src/modules/admin/admin.service.ts
-- [ ] T069 [US5] Implement admin routes (room upsert, occupancy report, booking oversight) in backend/src/modules/admin/admin.routes.ts
-- [ ] T070 [P] [US5] Implement admin console UI pages in frontend/src/features/admin/pages/AdminConsolePage.tsx
-- [ ] T071 [US5] Implement admin API service adapters in frontend/src/features/admin/services/adminApi.ts
+- [x] T067 [US5] Implement admin auth guard and full-access role enforcement in backend/src/modules/admin/admin-authz.middleware.ts
+- [x] T068 [US5] Implement admin inventory and reporting services in backend/src/modules/admin/admin.service.ts
+- [x] T069 [US5] Implement admin routes (room upsert, occupancy report, booking oversight) in backend/src/modules/admin/admin.routes.ts
+- [x] T070 [P] [US5] Implement admin console UI pages in frontend/src/features/admin/pages/AdminConsolePage.tsx
+- [x] T071 [US5] Implement admin API service adapters in frontend/src/features/admin/services/adminApi.ts
 
 **Checkpoint**: All user stories are independently functional.
 
@@ -186,13 +186,13 @@
 
 **Purpose**: System hardening and cross-story quality improvements.
 
-- [ ] T072 [P] Add API observability logging and request correlation in backend/src/middleware/observability.ts
-- [ ] T073 Add retry/expiry background scheduler wiring in backend/src/modules/payments/payments.scheduler.ts
-- [ ] T074 [P] Add regression tests for previously fixed defects in backend/tests/integration/regression.booking.test.ts
-- [ ] T075 Perform readability refactor pass for core services in backend/src/modules/
-- [ ] T076 [P] Update operational and developer docs in docs/qa-hotel-runbook.md
-- [ ] T077 Validate quickstart commands and expected outputs in specs/001-hotel-booking-platform/quickstart.md
-- [ ] T078 Run full test suite and publish evidence report in specs/001-hotel-booking-platform/test-evidence.md
+- [x] T072 [P] Add API observability logging and request correlation in backend/src/middleware/observability.ts
+- [x] T073 Add retry/expiry background scheduler wiring in backend/src/modules/payments/payments.scheduler.ts
+- [x] T074 [P] Add regression tests for previously fixed defects in backend/tests/integration/regression.booking.test.ts
+- [x] T075 Perform readability refactor pass for core services in backend/src/modules/
+- [x] T076 [P] Update operational and developer docs in docs/qa-hotel-runbook.md
+- [x] T077 Validate quickstart commands and expected outputs in specs/001-hotel-booking-platform/quickstart.md
+- [x] T078 Run full test suite and publish evidence report in specs/001-hotel-booking-platform/test-evidence.md
 
 ---
 

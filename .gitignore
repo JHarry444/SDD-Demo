@@ -1,0 +1,25 @@
+# Node/TypeScript
+node_modules/
+dist/
+build/
+*.log
+.env*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Coverage and test outputs
+coverage/
+playwright-report/
+
+# Editor/OS
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.vscode/
+.idea/
