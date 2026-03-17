@@ -1,0 +1,474 @@
+openapi: 3.0.3
+info:
+  title: QA Hotel API
+  version: 0.1.0
+  description: API contract for guest and admin hotel reservation workflows.
+servers:
+  - url: https://api.qahotel.example
+security:
+  - SessionAuth: []
+paths:
+  /auth/signup:
+    post:
+      summary: Register a guest account
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpRequest'
+      responses:
+        '201':
+          description: Account created in pending verification state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthMessageResponse'
+        '409':
+          description: Email already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /auth/verify-email:
+    post:
+      summary: Verify guest email token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token]
+              properties:
+                token:
+                  type: string
+      responses:
+        '200':
+          description: Email verified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthMessageResponse'
+  /auth/login:
+    post:
+      summary: Authenticate user or admin
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Authenticated session established
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /auth/password-recovery:
+    post:
+      summary: Start password recovery workflow
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        '202':
+          description: Recovery accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthMessageResponse'
+  /rooms:
+    get:
+      summary: List available rooms using filters
+      parameters:
+        - name: checkIn
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: checkOut
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: minPrice
+          in: query
+          schema:
+            type: number
+            format: float
+        - name: maxPrice
+          in: query
+          schema:
+            type: number
+            format: float
+        - name: amenities
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: false
+      responses:
+        '200':
+          description: Room search results
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RoomSummary'
+  /reservations:
+    post:
+      summary: Create pending reservation and begin payment flow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReservationRequest'
+      responses:
+        '201':
+          description: Pending reservation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '409':
+          description: Inventory conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: List reservations for current user
+      responses:
+        '200':
+          description: Reservation list
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Reservation'
+  /reservations/{reservationId}:
+    get:
+      summary: Get reservation details
+      parameters:
+        - $ref: '#/components/parameters/ReservationId'
+      responses:
+        '200':
+          description: Reservation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /reservations/{reservationId}/modify:
+    patch:
+      summary: Modify reservation details when policy allows
+      parameters:
+        - $ref: '#/components/parameters/ReservationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifyReservationRequest'
+      responses:
+        '200':
+          description: Reservation updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '409':
+          description: Modification conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /reservations/{reservationId}/cancel:
+    post:
+      summary: Cancel reservation when policy allows
+      parameters:
+        - $ref: '#/components/parameters/ReservationId'
+      responses:
+        '200':
+          description: Reservation cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+  /admin/rooms:
+    post:
+      summary: Create or update room inventory
+      security:
+        - SessionAuth: []
+      x-required-role: admin_full_access
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminRoomUpsertRequest'
+      responses:
+        '200':
+          description: Room upserted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoomSummary'
+  /admin/reports/occupancy:
+    get:
+      summary: Generate occupancy report
+      security:
+        - SessionAuth: []
+      x-required-role: admin_full_access
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Occupancy report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OccupancyReport'
+components:
+  securitySchemes:
+    SessionAuth:
+      type: apiKey
+      in: cookie
+      name: qahotel_session
+  parameters:
+    ReservationId:
+      name: reservationId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    SignUpRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 12
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      required: [session, principal]
+      properties:
+        session:
+          type: object
+          required: [expiresAt]
+          properties:
+            expiresAt:
+              type: string
+              format: date-time
+        principal:
+          type: object
+          required: [type, id, email]
+          properties:
+            type:
+              type: string
+              enum: [user, admin]
+            id:
+              type: string
+              format: uuid
+            email:
+              type: string
+              format: email
+    AuthMessageResponse:
+      type: object
+      required: [message]
+      properties:
+        message:
+          type: string
+    RoomSummary:
+      type: object
+      required: [id, code, roomType, nightlyRate, currency, amenities]
+      properties:
+        id:
+          type: string
+          format: uuid
+        code:
+          type: string
+        roomType:
+          type: string
+        nightlyRate:
+          type: number
+          format: float
+        currency:
+          type: string
+        amenities:
+          type: array
+          items:
+            type: string
+    CreateReservationRequest:
+      type: object
+      required: [roomId, checkInDate, checkOutDate, guestCount]
+      properties:
+        roomId:
+          type: string
+          format: uuid
+        checkInDate:
+          type: string
+          format: date
+        checkOutDate:
+          type: string
+          format: date
+        guestCount:
+          type: integer
+          minimum: 1
+    ModifyReservationRequest:
+      type: object
+      properties:
+        checkInDate:
+          type: string
+          format: date
+        checkOutDate:
+          type: string
+          format: date
+        guestCount:
+          type: integer
+          minimum: 1
+    Reservation:
+      type: object
+      required: [id, roomId, userId, status, checkInDate, checkOutDate, totalAmount, currency]
+      properties:
+        id:
+          type: string
+          format: uuid
+        roomId:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [pending_payment, confirmed, cancelled, failed, expired]
+        checkInDate:
+          type: string
+          format: date
+        checkOutDate:
+          type: string
+          format: date
+        holdExpiresAt:
+          type: string
+          format: date-time
+          nullable: true
+        totalAmount:
+          type: number
+          format: float
+        currency:
+          type: string
+    AdminRoomUpsertRequest:
+      type: object
+      required: [code, roomType, nightlyRate, currency, maxGuests, status]
+      properties:
+        code:
+          type: string
+        roomType:
+          type: string
+        nightlyRate:
+          type: number
+          format: float
+        currency:
+          type: string
+        maxGuests:
+          type: integer
+          minimum: 1
+        status:
+          type: string
+          enum: [active, inactive, maintenance]
+        amenities:
+          type: array
+          items:
+            type: string
+    OccupancyReport:
+      type: object
+      required: [startDate, endDate, occupancyRate, totalReservations]
+      properties:
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        occupancyRate:
+          type: number
+          format: float
+        totalReservations:
+          type: integer
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
