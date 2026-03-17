@@ -95,6 +95,16 @@
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
 - **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
+### Quality & Maintainability Requirements *(mandatory)*
+
+- **QR-001**: Code changes MUST preserve functional correctness for all defined
+  acceptance scenarios.
+- **QR-002**: Behavior MUST be independently testable for each user story.
+- **QR-003**: Public interfaces and failure modes MUST be explicit and
+  documented when changed.
+- **QR-004**: The solution MUST prioritize readability with clear naming and
+  bounded complexity in core flows.
+
 ### Key Entities *(include if feature involves data)*
 
 - **[Entity 1]**: [What it represents, key attributes without implementation]

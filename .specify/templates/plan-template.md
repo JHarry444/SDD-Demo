@@ -31,7 +31,15 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- [ ] Functional correctness scope is explicit with unambiguous acceptance
+  criteria.
+- [ ] Design keeps control flow understandable and avoids unnecessary
+  indirection.
+- [ ] Test strategy covers unit + integration levels and includes regression
+  tests for changed behavior.
+- [ ] Work is sliced for small, reviewable, independently testable increments.
+- [ ] Contract/interface changes are documented with compatibility and
+  observability notes.
 
 ## Project Structure
 
